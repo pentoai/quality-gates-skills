@@ -7,8 +7,8 @@
 		"email": "support@pento.ai",
 		"url": "https://pento.ai"
 	},
-	"homepage": "https://github.com/pentoai/quality-gates",
-	"repository": "https://github.com/pentoai/quality-gates",
+	"homepage": "https://github.com/pentoai/quality-gates-skills",
+	"repository": "https://github.com/pentoai/quality-gates-skills",
 	"license": "MIT",
 	"keywords": [
 		"quality-gates",

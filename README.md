@@ -19,12 +19,12 @@ Open your coding agent (Claude Code, Codex, Cursor, or any agent that can run sh
 in the repository and paste:
 
 ```text
-Set up quality gates in this repository with the quality-gates skill from pentoai/quality-gates.
+Set up quality gates in this repository with the quality-gates skill from pentoai/quality-gates-skills.
 
 1. Install the skill into this project:
-   npx skills add pentoai/quality-gates --skill quality-gates --yes
-   If you cannot run npx, clone https://github.com/pentoai/quality-gates into a temporary
-   folder and use skills/quality-gates from there.
+   npx skills add pentoai/quality-gates-skills --skill quality-gates --yes
+   If you cannot run npx, clone https://github.com/pentoai/quality-gates-skills into a
+   temporary folder and use skills/quality-gates from there.
 2. Read the skill's SKILL.md and follow its workflow end to end: survey the repo, install
    the tools, copy and adapt the templates, calibrate the thresholds to the code as it is
    today, and prove that the hooks and the CI workflow work.
@@ -71,13 +71,13 @@ When a gate fails later, the rule the agent follows is to fix the code, not the 
 **skills.sh** (Claude Code, Codex, Cursor, OpenCode and [many more](https://skills.sh)):
 
 ```sh
-npx skills add pentoai/quality-gates
+npx skills add pentoai/quality-gates-skills
 ```
 
 **Claude Code plugin:**
 
 ```text
-/plugin marketplace add pentoai/quality-gates
+/plugin marketplace add pentoai/quality-gates-skills
 /plugin install quality-gates@pento
 ```
 

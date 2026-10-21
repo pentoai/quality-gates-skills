@@ -13,7 +13,7 @@
 			"source": "./",
 			"description": "Pre-commit hooks and CI quality gates for TypeScript and Python repos, set up and calibrated by your coding agent.",
 			"category": "development",
-			"homepage": "https://github.com/pentoai/quality-gates"
+			"homepage": "https://github.com/pentoai/quality-gates-skills"
 		}
 	]
 }
