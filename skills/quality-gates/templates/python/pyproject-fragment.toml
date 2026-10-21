@@ -54,3 +54,9 @@ max-complexity-allowed = 15
 paths = ["src", "tests"]
 min_confidence = 60
 ignore_decorators = ["@pytest.fixture"]
+
+[tool.deptry]
+# The project's own package, so deptry does not report it as a missing dependency.
+known_first_party = ["your_package"]
+# Installed agent skills are not project code.
+extend_exclude = ['\.agents', '\.claude']

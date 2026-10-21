@@ -18,7 +18,7 @@ system Node when there is one and downloads one otherwise).
 
 | Template | Destination | Adapt |
 | --- | --- | --- |
-| `pyproject-fragment.toml` | merge into `pyproject.toml` | `your_package` and `src/`; `[tool.mypy] files`; coverage `source` to the logic layers; vulture settings per framework (below) |
+| `pyproject-fragment.toml` | merge into `pyproject.toml` | `your_package` (coverage `source`, deptry `known_first_party`) and `src/`; `[tool.mypy] files`; coverage `source` to the logic layers; vulture settings per framework (below) |
 | `.pre-commit-config.yaml` | `.pre-commit-config.yaml` | nothing for the default layout |
 | `.jscpd.json` | `.jscpd.json` | `ignore` |
 | `github/workflows/verify.yml` | `.github/workflows/verify.yml` | default branch |
@@ -26,8 +26,6 @@ system Node when there is one and downloads one otherwise).
 
 Then:
 
-- Add `[tool.deptry] known_first_party = ["your_package"]` so deptry does not report the
-  project's own package as a missing dependency.
 - Add `.coverage` and `htmlcov/` to `.gitignore`. Ruff, mypy, pytest and complexipy write
   their caches with their own `.gitignore`.
 - Run `uv run pre-commit install` once. Unlike husky, nothing installs the hook on clone, so

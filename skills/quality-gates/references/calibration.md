@@ -55,6 +55,7 @@ Python:
   | --- | --- | --- |
   | Lint rule or complexity | `// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: legacy parser, split tracked in #123` | `# noqa: C901  legacy parser, split tracked in #123` |
   | complexipy | | `# complexipy: ignore (legacy parser, #123)` on the `def` line |
+  | cccc (no per-function ignore) | add the file to `exclude` in `cccc.toml`, with the reason in a comment; Biome still checks its other functions | |
   | FTA | add the file to `exclude_filenames` in `fta.json` | |
   | Duplication | `// jscpd:ignore-start` / `// jscpd:ignore-end` | `# jscpd:ignore-start` / `# jscpd:ignore-end` |
   | Types | `// @ts-expect-error reason` | `# type: ignore[code]  # reason` |

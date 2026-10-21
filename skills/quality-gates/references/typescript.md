@@ -37,6 +37,9 @@ the cccc scripts run as `node scripts/*.ts`, which needs Node's built-in type st
 Then:
 
 - Add `.cccc.cache` and `/coverage` to `.gitignore`.
+- `pnpm/action-setup` in `verify.yml` reads the pnpm version from `package.json`: add
+  `"packageManager": "pnpm@<version>"` (from `pnpm --version`) when it is missing, then run
+  `pnpm install` so the lockfile agrees. Without it the CI job fails at its first step.
 - Run `pnpm run prepare` once. It installs the git hooks (husky) and the cccc binary. A plain
   `pnpm install` on an already installed tree can skip `prepare`; a fresh clone runs it.
 - Merge these into `tsconfig.json` `compilerOptions` (on an existing codebase, check each with
