@@ -16,7 +16,8 @@
 			"!coverage",
 			"!.agents",
 			"!.claude",
-			"!**/_generated"
+			"!**/_generated",
+			"!skills-lock.json"
 		]
 	},
 	"formatter": {

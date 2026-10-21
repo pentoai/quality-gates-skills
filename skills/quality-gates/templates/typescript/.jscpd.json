@@ -16,7 +16,8 @@
 		"pnpm-lock.yaml",
 		"package-lock.json",
 		"yarn.lock",
-		"bun.lock"
+		"bun.lock",
+		"skills-lock.json"
 	],
 	"format": ["typescript", "tsx", "javascript", "jsx"]
 }

@@ -80,8 +80,12 @@ All must be shown, not assumed:
 2. The hooks are installed: `git config core.hooksPath` prints `.husky/_` (husky), or
    `.git/hooks/pre-commit` exists and mentions pre-commit.
 3. A gate bites: add an unused import and a `console.log` / `print()` to a source file, stage
-   it, try to commit, confirm the commit is refused, then revert the file.
-4. `verify.yml` is valid YAML and names the repo's default branch.
+   it, try to commit, confirm the commit is refused, then revert the file. If the commit lands,
+   the hook is not installed: `git reset HEAD~1`, revert the file, and fix the hook first.
+4. The installed skill is not scanned as project code: when it lives in the repo
+   (`.agents/`, `.claude/`, `skills-lock.json`), every tool's ignore list covers it (the
+   templates already do).
+5. `verify.yml` is valid YAML and names the repo's default branch.
 
 ### 6. Report
 
