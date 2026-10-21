@@ -1,0 +1,25 @@
+{
+	"name": "quality-gates",
+	"version": "0.1.0",
+	"description": "Pre-commit hooks and CI quality gates for TypeScript and Python repos: format, lint, types, tests with coverage floors, complexity, duplication and dead code, set up and calibrated by your coding agent.",
+	"author": {
+		"name": "Pento",
+		"email": "support@pento.ai",
+		"url": "https://pento.ai"
+	},
+	"homepage": "https://github.com/pentoai/quality-gates",
+	"repository": "https://github.com/pentoai/quality-gates",
+	"license": "MIT",
+	"keywords": [
+		"quality-gates",
+		"pre-commit",
+		"ci",
+		"typescript",
+		"python",
+		"biome",
+		"ruff",
+		"husky",
+		"coverage",
+		"complexity"
+	]
+}

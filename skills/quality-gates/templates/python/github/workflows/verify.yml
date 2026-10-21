@@ -1,0 +1,42 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # Only a superseded pull request run is cancelled; a run on main always finishes, so a
+  # cancelled run there was stopped by a person, not replaced by a newer one.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # jscpd builds its baseline from origin/main, so the history must be present.
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          enable-cache: true
+
+      - run: uv sync --locked
+
+      # The same hooks a commit runs, over the whole tree.
+      - name: pre-commit
+        run: uv run pre-commit run --all-files --show-diff-on-failure
+
+      # A pull request should not add duplication, even under the threshold. Reported as a
+      # warning: flip continue-on-error to false to make new clones fail the check.
+      - name: jscpd new clones
+        if: github.event_name == 'pull_request'
+        run: npx --yes jscpd@5.4.2 . --baseline-from-ref origin/main --fail-on-new-clones
+        continue-on-error: true

@@ -1,0 +1,15 @@
+{
+	"extensions": [".ts", ".tsx"],
+	"exclude_directories": [
+		"/node_modules",
+		"/.next",
+		"/dist",
+		"/build",
+		"/coverage",
+		"/.agents",
+		"/.claude",
+		"/_generated"
+	],
+	"exclude_filenames": ["*.d.ts", "*.test.ts", "*.test.tsx"],
+	"score_cap": 60
+}

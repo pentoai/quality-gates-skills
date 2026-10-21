@@ -1,0 +1,5 @@
+pnpm exec lint-staged
+pnpm typecheck
+pnpm test
+# FTA, jscpd and cccc: maintainability, duplication and per-function complexity.
+pnpm metrics:check

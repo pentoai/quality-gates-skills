@@ -1,0 +1,49 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # Only a superseded pull request run is cancelled; a run on main always finishes, so a
+  # cancelled run there was stopped by a person, not replaced by a newer one.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # jscpd builds its baseline from origin/main, so the history must be present.
+          fetch-depth: 0
+
+      # npm, yarn or bun: drop this step and set `cache:` below to match.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: pnpm verify
+        run: pnpm verify
+
+      # Keep this step unless the host already builds every pull request (Vercel, Netlify).
+      - name: pnpm build
+        run: pnpm build
+
+      # A pull request should not add duplication, even under the threshold. Reported as a
+      # warning: flip continue-on-error to false to make new clones fail the check.
+      - name: jscpd new clones
+        if: github.event_name == 'pull_request'
+        run: pnpm exec jscpd . --baseline-from-ref origin/main --fail-on-new-clones
+        continue-on-error: true

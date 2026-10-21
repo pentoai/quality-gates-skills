@@ -1,0 +1,56 @@
+# Merge these tables into pyproject.toml. Replace `your_package` with the import package
+# and adjust `src/` if the repo does not use the src layout.
+
+[tool.ruff]
+extend-exclude = [".agents", ".claude", "**/_generated"]
+
+[tool.ruff.lint]
+# Ruff's defaults (E4, E7, E9, F) plus the rules below.
+extend-select = [
+	"I",       # import order
+	"UP",      # syntax for the target Python version
+	"B",       # likely bugs
+	"SIM",     # simplifications
+	"C4",      # comprehensions
+	"RUF",     # Ruff's own rules
+	"T20",     # print() outside scripts and tests
+	"C90",     # cyclomatic complexity per function
+	"PLR0911", # too many return statements
+	"PLR0912", # too many branches
+	"PLR0913", # too many arguments
+	"PLR0915", # too many statements
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+"scripts/**" = ["T20"]
+
+[tool.mypy]
+strict = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--cov", "--cov-report=term-missing:skip-covered"]
+
+# Coverage is gated where unit tests are the proof: the logic layers. Files whose only job is
+# to drive an external service are integration surfaces and go in `omit`.
+[tool.coverage.run]
+source = ["src/your_package"]
+branch = true
+omit = []
+
+[tool.coverage.report]
+fail_under = 85
+
+[tool.complexipy]
+paths = ["src"]
+max-complexity-allowed = 15
+
+[tool.vulture]
+paths = ["src", "tests"]
+min_confidence = 60
+ignore_decorators = ["@pytest.fixture"]

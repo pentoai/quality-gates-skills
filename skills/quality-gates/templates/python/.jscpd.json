@@ -1,0 +1,20 @@
+{
+	"threshold": 5,
+	"minTokens": 50,
+	"reporters": ["console"],
+	"ignore": [
+		"**/.venv/**",
+		"**/__pycache__/**",
+		"**/node_modules/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/htmlcov/**",
+		"**/_generated/**",
+		"**/migrations/**",
+		"tests/**",
+		".agents/**",
+		".claude/**",
+		"uv.lock"
+	],
+	"format": ["python"]
+}

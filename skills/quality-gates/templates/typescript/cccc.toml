@@ -1,0 +1,8 @@
+# Per-function cognitive and cyclomatic gate.
+# cccc exits 1 when a function scores above either maximum.
+# Declarations and generated files are out; tests are in.
+languages = ["es"]
+exclude = ["**/*.d.ts", "**/_generated/**", "**/generated/**"]
+max-cognitive = 40
+max-cyclomatic = 40
+cache = true

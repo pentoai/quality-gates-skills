@@ -1,0 +1,19 @@
+{
+	"$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+	"name": "pento",
+	"description": "Open-source agent skills from Pento.",
+	"owner": {
+		"name": "Pento",
+		"email": "support@pento.ai",
+		"url": "https://pento.ai"
+	},
+	"plugins": [
+		{
+			"name": "quality-gates",
+			"source": "./",
+			"description": "Pre-commit hooks and CI quality gates for TypeScript and Python repos, set up and calibrated by your coding agent.",
+			"category": "development",
+			"homepage": "https://github.com/pentoai/quality-gates"
+		}
+	]
+}

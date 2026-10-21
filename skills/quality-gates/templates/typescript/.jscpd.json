@@ -1,0 +1,22 @@
+{
+	"threshold": 5,
+	"minTokens": 50,
+	"reporters": ["console"],
+	"ignore": [
+		"**/node_modules/**",
+		"**/.next/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/coverage/**",
+		"**/_generated/**",
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		".agents/**",
+		".claude/**",
+		"pnpm-lock.yaml",
+		"package-lock.json",
+		"yarn.lock",
+		"bun.lock"
+	],
+	"format": ["typescript", "tsx", "javascript", "jsx"]
+}

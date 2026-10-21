@@ -1,0 +1,61 @@
+# Quality gates. Every commit runs Ruff on the staged files, then the repo-wide gates.
+# `uv run pre-commit run --all-files` runs everything on the whole tree; CI runs the same.
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check (lint, import order, complexity)
+        entry: uv run ruff check --fix
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: mypy
+        name: mypy (types)
+        entry: uv run mypy
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: pytest
+        name: pytest (tests and coverage)
+        entry: uv run pytest -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: complexipy
+        name: complexipy (cognitive complexity per function)
+        entry: uv run complexipy --quiet
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: vulture
+        name: vulture (dead code)
+        entry: uv run vulture
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: deptry
+        name: deptry (unused and missing dependencies)
+        entry: uv run deptry .
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: jscpd
+        name: jscpd (duplication)
+        entry: jscpd .
+        language: node
+        additional_dependencies: [jscpd@5.4.2]
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,22 @@
+{
+	"engines": {
+		"node": ">=24"
+	},
+	"scripts": {
+		"lint": "biome check",
+		"lint:fix": "biome check --write",
+		"lint:unused": "KNIP_DISABLE_RAW_TRANSFER=1 knip",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --coverage",
+		"test:watch": "vitest",
+		"metrics:fta": "fta . --config-path fta.json",
+		"metrics:jscpd": "jscpd .",
+		"metrics:cccc": "node scripts/cccc-check.ts",
+		"metrics:check": "pnpm metrics:fta --output-limit 10 && pnpm metrics:jscpd && pnpm metrics:cccc",
+		"verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm metrics:check && pnpm lint:unused",
+		"prepare": "husky && node scripts/cccc-install.ts"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+	}
+}
