@@ -9,7 +9,7 @@
 	"scripts": {
 		"lint": "biome check",
 		"typecheck": "tsc --noEmit",
-		"test": "node scripts/validate-templates.ts",
+		"test": "node --test scripts/*.test.ts && node scripts/validate-templates.ts",
 		"check": "pnpm lint && pnpm typecheck && pnpm test"
 	},
 	"devDependencies": {
