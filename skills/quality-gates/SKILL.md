@@ -126,16 +126,31 @@ to the standard of" another repo). It changes nothing until the user agrees to t
    | --- | --- | --- | --- | --- |
    | cccc cognitive | 65 | 40 | 52 | 55 |
 
-   Proposed follows `references/calibration.md` §3 and §4: the measured worst value rounded
-   up to the next 5 (coverage: a few points under the measured value), never above the
-   target's end of the range, and never above the configured value. Write `keep` when the
-   proposal would not be lower than what is configured, and `target met` when the measured
-   value is at or under the target (propose the target itself).
-6. **Only ever propose to go down.** Never raise a threshold, even if the measure is worse
-   than configured; report that row as a regression and name the offending files or functions
-   so the code can be fixed instead.
+   Proposed follows `references/calibration.md` §3 and §4. Most gates are limits (a maximum:
+   complexity, duplication %, FTA score, finding counts); coverage is a floor (a minimum).
+   The two tighten in opposite directions:
+
+   - **Limit:** propose the measured worst value rounded up to the next 5, never below the
+     target. Write `keep` when that is not lower than the configured value, or when the
+     configured value already equals the target. When the measured value is at or under the
+     target, write `target met` and propose the target itself.
+   - **Floor:** propose a few points under the measured value, never above the target. Write
+     `keep` when that is not higher than the configured floor, or when the floor already
+     equals the target. When the measured value is at or above the target, write `target met`
+     and propose the target itself.
+6. **Only ever tighten.** Tightening is down for a limit and up for a floor. Never loosen a
+   threshold, even if the measure is worse than configured (a limit below the measured value,
+   a floor above it): report that row as a regression and name the offending files or
+   functions so the code can be fixed instead.
+
+   | Gate | Configured | Target | Measured | Proposed |
+   | --- | --- | --- | --- | --- |
+   | Coverage lines (floor) | 80 | 85 | 92 | 85 (target met) |
+   | Coverage lines (floor) | 80 | 85 | 75 | regression: keep 80, add tests |
+   | Coverage lines (floor, target 95) | 80 | 95 | 92 | 89 |
+
 7. **Apply only what the user approves,** one gate per commit, with the reason and the
-   measured value in the message ("Lower cccc cognitive max from 65 to 55: worst is now 52").
+   measured value in the message ("Lower cccc cognitive max from 65 to 55: worst is now 52", "Raise the lines floor from 80 to 89: measured 92").
    Re-run the one command before each commit.
 
 ## Both languages in one repo
