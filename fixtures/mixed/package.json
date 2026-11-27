@@ -1,0 +1,11 @@
+{
+	"name": "fixture-mixed",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"packageManager": "pnpm@11.29.0",
+	"main": "src/index.ts",
+	"scripts": {
+		"build": "tsc --outDir dist --rootDir src"
+	}
+}
