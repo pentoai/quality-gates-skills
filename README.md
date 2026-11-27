@@ -109,6 +109,10 @@ Issues and pull requests are welcome. Every template change should be tried on a
 project first: apply it, run the one command for the language, and show a bad commit being
 refused.
 
+`pnpm consistency` fails when the defaults in the README, SKILL.md and the templates drift,
+when a reference's template table misses a file, or when a pin or ignore list differs. Change
+those together.
+
 `scripts/test-fixtures.sh [typescript|python|mixed]` does that against the repos in
 `fixtures/`, and the `fixtures` workflow runs it on every pull request. It needs network,
 Node 24, pnpm and uv. Run it before you open a pull request; a template change that breaks it
