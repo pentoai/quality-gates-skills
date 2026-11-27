@@ -41,7 +41,7 @@ function limits(): Limits {
 	const text = readFileSync("cccc.toml", "utf8");
 	const read = (key: string) => {
 		const value = text.match(
-			new RegExp(`^${key}\\s*=\\s*(\\d+)\\s*$`, "m"),
+			new RegExp(`^${key}\\s*=\\s*(\\d+)\\s*(?:#.*)?$`, "m"),
 		)?.[1];
 		return value === undefined ? undefined : Number(value);
 	};
