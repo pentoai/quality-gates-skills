@@ -109,6 +109,10 @@ Issues and pull requests are welcome. Every template change should be tried on a
 project first: apply it, run the one command for the language, and show a bad commit being
 refused.
 
+CI runs `pnpm check` (Biome, `tsc --noEmit`, and a parse of every JSON, YAML and TOML
+template) plus actionlint on the `verify.yml` templates. Run `pnpm install && pnpm check`
+before you push. It does not replace trying the template on a real project.
+
 ## License
 
 [MIT](LICENSE)
