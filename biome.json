@@ -1,0 +1,55 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"scripts/*.ts",
+			"skills/quality-gates/templates/typescript/scripts/*.ts",
+			"skills/quality-gates/templates/typescript/*.json",
+			"!!skills/quality-gates/templates/typescript/biome.json",
+			"skills/quality-gates/templates/typescript/.jscpd.json",
+			"skills/quality-gates/templates/python/.jscpd.json",
+			".claude-plugin/*.json",
+			"biome.json",
+			"package.json",
+			"tsconfig.json"
+		]
+	},
+	"formatter": {
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"rules": {
+			"preset": "recommended",
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error"
+			},
+			"suspicious": {
+				"noConsole": {
+					"level": "error",
+					"options": {
+						"allow": ["error", "warn"]
+					}
+				}
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/scripts/*.ts"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		}
+	]
+}
