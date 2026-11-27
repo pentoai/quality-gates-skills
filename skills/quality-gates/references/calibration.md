@@ -94,3 +94,6 @@ Python:
 Whatever was loosened is recorded with its target. Each later change that brings the worst
 value down may lower the threshold in the same commit. A threshold never goes up to let a new
 change through.
+
+To find out what can be lowered now, run the audit in `SKILL.md` ("Audit an existing setup"):
+it measures every gate with the commands in §2 and proposes only lower thresholds.
