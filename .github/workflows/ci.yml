@@ -42,6 +42,11 @@ jobs:
       - name: pnpm test
         run: pnpm test
 
+      # README, SKILL.md, the reference tables and the templates must agree on thresholds,
+      # pins, template lists and ignore lists.
+      - name: pnpm consistency
+        run: pnpm consistency
+
       # Checks this repo's workflows and both verify.yml templates (the templates sit in a
       # folder named `github`, so actionlint only sees them when they are passed by path).
       - name: actionlint

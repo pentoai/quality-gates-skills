@@ -10,7 +10,8 @@
 		"lint": "biome check",
 		"typecheck": "tsc --noEmit",
 		"test": "node --test scripts/*.test.ts && node scripts/validate-templates.ts",
-		"check": "pnpm lint && pnpm typecheck && pnpm test"
+		"consistency": "node scripts/check-consistency.ts",
+		"check": "pnpm lint && pnpm typecheck && pnpm test && pnpm consistency"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.6.9",
