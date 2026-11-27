@@ -92,5 +92,10 @@ Python:
 ## 4. Ratchet
 
 Whatever was loosened is recorded with its target. Each later change that brings the worst
-value down may lower the threshold in the same commit. A threshold never goes up to let a new
-change through.
+value down may lower a limit in the same commit, and one that raises coverage may raise its
+floor. A limit never goes up, and a coverage floor never goes down, to let a new change
+through.
+
+To find out what can be tightened now (limits lowered, coverage floors raised), run the audit
+in `SKILL.md` ("Audit an existing setup"): it measures every gate with the commands in §2 and
+proposes only tighter thresholds.

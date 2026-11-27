@@ -30,7 +30,8 @@ Read the reference for each language the repo uses before you change anything:
   Next.js, Vite, monorepos, existing ESLint/Prettier or Jest, slow hooks, other CI).
 - `references/python.md`: install, templates, framework notes, and variants (no uv, pyright,
   prek, a Python project in a subdirectory, slow hooks).
-- `references/calibration.md`: adopting the gates on a codebase that does not meet them yet.
+- `references/calibration.md`: adopting the gates on a codebase that does not meet them yet,
+  the measure command per gate, and the ratchet that the audit uses.
 
 ## Workflow
 
@@ -99,6 +100,58 @@ Tell the user, in short:
 
 Commit in reviewable steps when asked to commit: tooling and configs; the one-off formatting
 pass; then calibration fixes.
+
+## Audit an existing setup
+
+Use this when the repo already has gates (or the user asks to audit, review or "bring it up
+to the standard of" another repo). It changes nothing until the user agrees to the proposals.
+
+1. **Detect what is installed.** TypeScript: `biome.json`, `vitest.config.ts`, `fta.json`,
+   `cccc.toml`, `knip.json`, `.jscpd.json`, the `verify` and `metrics:*` scripts, `.husky/`,
+   `.github/workflows/verify.yml`. Python: the `[tool.ruff]`, `[tool.mypy]`,
+   `[tool.coverage]`, `[tool.complexipy]`, `[tool.vulture]` and `[tool.deptry]` tables,
+   `.pre-commit-config.yaml`, `.jscpd.json`, `verify.yml`.
+2. **Flag what is missing** against the template set in the language's reference (the
+   "Template | Destination | Adapt" table) and the gate table above: for example no knip,
+   no `verify.yml`, no hook, no coverage floor. Offer to add each through the normal
+   workflow (steps 2 to 5); do not add it silently.
+3. **Read the recorded targets.** Where a threshold was loosened, its target is in a comment
+   in `cccc.toml` or `pyproject.toml`, or in the quality-gates section of `AGENTS.md` /
+   `CLAUDE.md` for JSON configs. With no record, the target is the default in the table above.
+4. **Measure each gate** with the commands in `references/calibration.md` §2. Run each
+   measure on its own and read the number named in its "Read" column.
+5. **Report one table per language**, one row per gate:
+
+   | Gate | Configured | Target | Measured | Proposed |
+   | --- | --- | --- | --- | --- |
+   | cccc cognitive | 65 | 40 | 52 | 55 |
+
+   Proposed follows `references/calibration.md` §3 and §4. Most gates are limits (a maximum:
+   complexity, duplication %, FTA score, finding counts); coverage is a floor (a minimum).
+   The two tighten in opposite directions:
+
+   - **Limit:** propose the measured worst value rounded up to the next 5, never below the
+     target. Write `keep` when that is not lower than the configured value, or when the
+     configured value already equals the target. When the measured value is at or under the
+     target, write `target met` and propose the target itself.
+   - **Floor:** propose a few points under the measured value, never above the target. Write
+     `keep` when that is not higher than the configured floor, or when the floor already
+     equals the target. When the measured value is at or above the target, write `target met`
+     and propose the target itself.
+6. **Only ever tighten.** Tightening is down for a limit and up for a floor. Never loosen a
+   threshold, even if the measure is worse than configured (a limit below the measured value,
+   a floor above it): report that row as a regression and name the offending files or
+   functions so the code can be fixed instead.
+
+   | Gate | Configured | Target | Measured | Proposed |
+   | --- | --- | --- | --- | --- |
+   | Coverage lines (floor) | 80 | 85 | 92 | 85 (target met) |
+   | Coverage lines (floor) | 80 | 85 | 75 | regression: keep 80, add tests |
+   | Coverage lines (floor, target 95) | 80 | 95 | 92 | 89 |
+
+7. **Apply only what the user approves,** one gate per commit, with the reason and the
+   measured value in the message ("Lower cccc cognitive max from 65 to 55: worst is now 52", "Raise the lines floor from 80 to 89: measured 92").
+   Re-run the one command before each commit.
 
 ## Both languages in one repo
 
