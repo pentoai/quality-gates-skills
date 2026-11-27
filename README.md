@@ -109,6 +109,11 @@ Issues and pull requests are welcome. Every template change should be tried on a
 project first: apply it, run the one command for the language, and show a bad commit being
 refused.
 
+`scripts/test-fixtures.sh [typescript|python|mixed]` does that against the repos in
+`fixtures/`, and the `fixtures` workflow runs it on every pull request. It needs network,
+Node 24, pnpm and uv. Run it before you open a pull request; a template change that breaks it
+is not ready.
+
 CI runs `pnpm check` (Biome, `tsc --noEmit`, and a parse of every JSON, YAML and TOML
 template) plus actionlint on the `verify.yml` templates. Run `pnpm install && pnpm check`
 before you push. It does not replace trying the template on a real project.
